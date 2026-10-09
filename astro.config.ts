@@ -18,6 +18,7 @@ import config from "./astro-paper.config";
 
 export default defineConfig({
   site: config.site.url,
+  base: "/My-Site",
   integrations: [
     mdx(),
     sitemap({
@@ -42,6 +43,7 @@ export default defineConfig({
       rehypePlugins: [rehypeCallouts, rehypeKatex],
     }),
     shikiConfig: {
+      langAlias: { Makefile: "makefile" },
       themes: { light: "min-light", dark: "night-owl" },
       defaultColor: false,
       wrap: false,

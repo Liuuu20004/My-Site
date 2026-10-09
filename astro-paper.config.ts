@@ -2,7 +2,7 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "http://localhost:4321/",
+    url: "https://liuuu20004.github.io",
     title: "Projects & Notes",
     description:
       "Design, implementation, experiments, and notes organized by project.",

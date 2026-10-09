@@ -1,11 +1,11 @@
 # Base stage for building the static files
-FROM node:lts AS base
+FROM node:24 AS base
 WORKDIR /app
 
 # Install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@11.19.0 --activate
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .
@@ -13,5 +13,5 @@ RUN pnpm run build
 
 # Runtime stage for serving the application
 FROM nginx:mainline-alpine-slim AS runtime
-COPY --from=base /app/dist /usr/share/nginx/html
+COPY --from=base /app/dist /usr/share/nginx/html/My-Site
 EXPOSE 80
