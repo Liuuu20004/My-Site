@@ -1,0 +1,81 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import { getProjects } from "@/utils/getProjects";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import { getNoteParts } from "@/utils/getPostPaths";
+import config from "@/config";
+export async function getStaticPaths() {
+  return (await getProjects()).map(project => ({
+    params: { project: project.id },
+    props: { project },
+  }));
+}
+type Props = { project: CollectionEntry<"projects"> };
+const { project } = Astro.props;
+const { Content } = await render(project);
+const notes = getSortedPosts(await getCollection("posts")).filter(
+  note => getNoteParts(note.id).project === project.id
+);
+---
+
+<Layout
+  title={`${project.data.title} | ${config.site.title}`}
+  description={project.data.description}
+>
+  <Header />
+  <main id="main-content" class="app-layout py-8" data-pagefind-body>
+    <a
+      href={getRelativeLocaleUrl(config.site.lang, "projects/")}
+      class="text-accent text-sm underline underline-offset-4"
+      data-pagefind-ignore>← All Projects</a
+    >
+    <h1 class="mt-6 text-3xl font-bold" data-pagefind-meta="title">
+      {project.data.title}
+    </h1>
+    <p class="text-muted-foreground mt-3">{project.data.description}</p>
+    <div class="text-accent mt-4 flex gap-5">
+      {
+        project.data.repository && (
+          <a
+            href={project.data.repository}
+            class="underline underline-offset-4"
+          >
+            GitHub ↗
+          </a>
+        )
+      }
+      {
+        project.data.demo && (
+          <a href={project.data.demo} class="underline underline-offset-4">
+            Demo ↗
+          </a>
+        )
+      }
+    </div>
+    <article class="app-prose my-8"><Content /></article>
+    <section
+      class="border-border border-t pt-8"
+      aria-labelledby="project-notes"
+      data-pagefind-ignore
+    >
+      <h2 id="project-notes" class="text-2xl font-semibold">Project Notes</h2>
+      {
+        notes.length ? (
+          <ul>
+            {notes.map(note => (
+              <Card {...note} />
+            ))}
+          </ul>
+        ) : (
+          <p class="mt-4">No published notes yet.</p>
+        )
+      }
+    </section>
+  </main>
+  <Footer />
+</Layout>

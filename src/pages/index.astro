@@ -1,0 +1,64 @@
+---
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import { getProjects } from "@/utils/getProjects";
+import { getNoteParts } from "@/utils/getPostPaths";
+import config from "@/config";
+const projects = await getProjects();
+const notes = getSortedPosts(await getCollection("posts"));
+---
+
+<Layout>
+  <Header />
+  <main id="main-content" class="app-layout py-8">
+    <section class="border-border border-b pb-8">
+      <h1 class="my-4 text-4xl font-bold">Projects & Notes</h1>
+      <p>
+        Design, implementation, experiments, and notes organized by project.
+      </p>
+    </section>
+    <section class="py-8" aria-labelledby="projects-heading">
+      <h2 id="projects-heading" class="mb-6 text-2xl font-semibold">
+        Projects
+      </h2>
+      <ul class="grid gap-4 sm:grid-cols-2">
+        {
+          projects.map(project => (
+            <ProjectCard
+              project={project}
+              noteCount={
+                notes.filter(
+                  note => getNoteParts(note.id).project === project.id
+                ).length
+              }
+            />
+          ))
+        }
+      </ul>
+    </section>
+    <section
+      class="border-border border-t py-8"
+      aria-labelledby="notes-heading"
+    >
+      <h2 id="notes-heading" class="text-2xl font-semibold">Recent Notes</h2>
+      <ul>
+        {
+          notes
+            .slice(0, config.posts.perIndex)
+            .map(note => <Card variant="h3" {...note} />)
+        }
+      </ul>
+      <a
+        href={getRelativeLocaleUrl(config.site.lang, "notes/")}
+        class="text-accent underline underline-offset-4">All Notes →</a
+      >
+    </section>
+  </main>
+  <Footer />
+</Layout>

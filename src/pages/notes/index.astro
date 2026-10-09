@@ -1,0 +1,46 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import { getProjects } from "@/utils/getProjects";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import { getNoteParts, getProjectUrl } from "@/utils/getPostPaths";
+import config from "@/config";
+const projects = await getProjects();
+const notes = getSortedPosts(await getCollection("posts"));
+---
+
+<Layout title={`Notes | ${config.site.title}`}>
+  <Header />
+  <Main
+    pageTitle="All Notes"
+    pageDesc="Learning and development notes organized by project."
+    class="pt-8"
+  >
+    {
+      projects.map(project => (
+        <section class="border-border mb-8 border-t pt-6">
+          <h2 class="text-xl font-semibold">
+            <a
+              href={getProjectUrl(project.id)}
+              class="text-accent hover:underline"
+            >
+              {project.data.title}
+            </a>
+          </h2>
+          <ul>
+            {notes
+              .filter(note => getNoteParts(note.id).project === project.id)
+              .map(note => (
+                <Card variant="h3" {...note} />
+              ))}
+          </ul>
+        </section>
+      ))
+    }
+  </Main>
+  <Footer />
+</Layout>

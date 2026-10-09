@@ -1,0 +1,44 @@
+{
+  "dtt/notes/hw1/all_reduce": {
+    "title": "All Reduce",
+    "description": "All Reduce",
+    "pubDatetime": "2026-09-21T22:36:52.679035+00:00",
+    "tags": ["hw1"],
+    "draft": false
+  },
+  "dtt/notes/hw1/array_init_in_python": {
+    "title": "Array Identity, Copying, and In-Place Assignment in Python",
+    "description": "Array Identity, Copying, and In-Place Assignment in Python",
+    "pubDatetime": "2026-09-19T23:57:52.243891+00:00",
+    "tags": ["hw1"],
+    "draft": false
+  },
+  "dtt/notes/hw1/data_parallel_and_tensor_parallel": {
+    "title": "Tensor Parallel",
+    "description": "Tensor Parallel",
+    "pubDatetime": "2026-09-25T07:09:29.405535+00:00",
+    "tags": ["hw1"],
+    "draft": false
+  },
+  "dtt/notes/hw1/memory_and_communication": {
+    "title": "Processes, Threads, and Goroutines: Execution Models and Memory Sharing",
+    "description": "Processes, Threads, and Goroutines: Execution Models and Memory Sharing",
+    "pubDatetime": "2026-09-19T23:57:52.244602+00:00",
+    "tags": ["hw1"],
+    "draft": false
+  },
+  "dtt/notes/hw2/matrix_calculation_in_cnn": {
+    "title": "Matrix Calculation in CNN",
+    "description": "Matrix Calculation in CNN",
+    "pubDatetime": "2026-09-28T00:00:00+09:00",
+    "tags": ["hw2"],
+    "draft": false
+  },
+  "ticketer/notes/why_apis": {
+    "title": "Why APIs: openAPI, root httpAPI and service httpAPI, an Explanations",
+    "description": "Why APIs: openAPI, root httpAPI and service httpAPI, an Explanations",
+    "pubDatetime": "2026-10-08T00:00:00+09:00",
+    "tags": ["api"],
+    "draft": false
+  }
+}

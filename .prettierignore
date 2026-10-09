@@ -1,0 +1,25 @@
+# Ignore everything
+/*
+
+# Except these files & folders
+!/src
+!/public
+!/scripts
+!/.github
+!tsconfig.json
+!astro.config.ts
+!astro-paper.config.ts
+!package.json
+!.prettierrc
+!eslint.config.js
+!README.md
+!.vscode
+
+# Ignore MDX files
+*.mdx
+
+# Imported notes must remain byte-for-byte identical to their source.
+/src/content/projects/dtt/notes/hw1/*.md
+/src/content/projects/dtt/notes/hw2/matrix_calculation_in_cnn.md
+
+/src/content/projects/ticketer/notes/why_apis.md

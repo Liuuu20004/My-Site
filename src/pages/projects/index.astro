@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { getProjects } from "@/utils/getProjects";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import { getNoteParts } from "@/utils/getPostPaths";
+import config from "@/config";
+const projects = await getProjects();
+const notes = getSortedPosts(await getCollection("posts"));
+---
+
+<Layout title={`Projects | ${config.site.title}`}>
+  <Header />
+  <Main
+    pageTitle="Projects"
+    pageDesc="Project overviews and related notes."
+    class="pt-8"
+  >
+    <ul class="grid gap-4 sm:grid-cols-2">
+      {
+        projects.map(project => (
+          <ProjectCard
+            project={project}
+            noteCount={
+              notes.filter(note => getNoteParts(note.id).project === project.id)
+                .length
+            }
+          />
+        ))
+      }
+    </ul>
+  </Main>
+  <Footer />
+</Layout>
